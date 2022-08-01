@@ -46,6 +46,7 @@ class WordpieceTokenizer final {
     ustring suffix_indicator, int max_input_chars_per_word = 100);
   std::vector<ustring> Tokenize(const ustring& text);
   std::vector<ustring> Tokenize(const std::vector<ustring>& tokens);
+  std::vector<ustring> Tokenize(const std::vector<ustring>& tokens, std::vector<int64_t>& word_ids);
   std::vector<int64_t> Encode(const std::vector<ustring>& tokens);
 
  private:
@@ -56,6 +57,7 @@ class WordpieceTokenizer final {
   std::shared_ptr<BertTokenizerVocab> vocab_;
 
   void GreedySearch(const ustring& token, std::vector<ustring>& tokenized_result);
+  int GreedySearch(const ustring& token, std::vector<ustring>& tokenized_result, std::vector<ustring>& words);
 };
 
 class BertTokenizer final {
@@ -65,6 +67,7 @@ class BertTokenizer final {
                 ustring mask_token, bool tokenize_chinese_chars, bool strip_accents,
                 ustring suffix_indicator, int32_t max_len, const std::string& truncation_strategy);
   std::vector<ustring> Tokenize(const ustring& text);
+  std::vector<ustring> Tokenize(const ustring& text, std::vector<int64_t>& word_ids);
   std::vector<int64_t> Encode(const std::vector<ustring>& tokens);
 
   void Truncate(std::vector<int64_t>& ids);
